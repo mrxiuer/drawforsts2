@@ -561,7 +561,7 @@ class SlayTheSpireMapPainter:
             return
         
         # 更新速度参数（最大速度翻倍 - 更快）
-        self.draw_speed = 0.0015 - (self.scale_speed.get() - 1) * 0.00015
+        self.draw_speed = 0.003 - (self.scale_speed.get() - 1) * 0.0003
         
         self.is_drawing = True
         self._right_click_received = False
@@ -844,10 +844,13 @@ class SlayTheSpireMapPainter:
             if cv2.contourArea(contour) < 1:
                 continue
                 
-            # 不进行多边形近似，保留所有原始轮廓点
+            # 使用多边形近似减少点数，同时保证精度（固定1像素阈值）
+            epsilon = 1.0  # 固定像素阈值，减少点数但保持形状细节
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            
             # 转换为游戏坐标
             path = []
-            for point in contour:
+            for point in approx:
                 x, y = point[0]
                 path.append((offset_x + x, offset_y + y))
             
