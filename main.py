@@ -241,7 +241,7 @@ class SlayTheSpireMapPainter:
         self.high_threshold = 150
 
         # 绘制速度 (越小越快)
-        self.draw_speed = 0.002
+        self.draw_speed = 0.001
 
         self.setup_ui()
         self.log("程序已启动，请导入图片")
@@ -862,7 +862,7 @@ class SlayTheSpireMapPainter:
             return
 
         # 更新速度参数（最大速度翻倍 - 更快）
-        self.draw_speed = 0.0015 - (self.scale_speed.get() - 1) * 0.00015
+        self.draw_speed = 0.001 - self.scale_speed.get()* 0.0001
 
         self.is_drawing = True
         self._right_click_received = False
@@ -911,7 +911,7 @@ class SlayTheSpireMapPainter:
             return
 
         # 更新速度参数
-        self.draw_speed = 0.0015 - (self.scale_speed.get() - 1) * 0.00015
+        self.draw_speed = 0.001 - self.scale_speed.get()* 0.0001
 
         self.is_drawing = True
         self._right_click_received = False
